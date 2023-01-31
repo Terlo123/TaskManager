@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xct:Popup xmlns="http://xamarin.com/schemas/2014/forms"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+           x:Class="TaskOrganizerAndro.View.DeleteSelectionPopup"
+           Size="225,225"
+           Color="{AppThemeBinding Dark=#ff303030, Light=White}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackLayout Orientation="Horizontal" Margin="15,5,0,0" Grid.Row="0" Grid.Column="0">
+            <CheckBox Scale="2" IsChecked="{Binding DeleteUnfinished, Mode=TwoWay}"/>
+            <Label FontSize="20" Text="Usuń nieaktywne"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" Margin="15,5,0,0" Grid.Row="1" Grid.Column="0">
+            <CheckBox Scale="2" IsChecked="{Binding DeleteActivated, Mode=TwoWay}"/>
+            <Label FontSize="20" Text="Usuń aktywowane"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" Margin="15,5,0,0" Grid.Row="2" Grid.Column="0">
+            <CheckBox Scale="2" IsChecked="{Binding DeleteFinished, Mode=TwoWay}"/>
+            <Label FontSize="20" Text="Usuń zakonczone"/>
+        </StackLayout>
+        <StackLayout HorizontalOptions="Center" Margin="5,5,5,5" Grid.Row="3" Orientation="Horizontal">
+            <Button Text="Usuń" Clicked="Button_ClickedDelete"/>
+            <Button Text="Anuluj" Clicked="Button_ClickedCancel"/>
+        </StackLayout>
+    </Grid>
+</xct:Popup>

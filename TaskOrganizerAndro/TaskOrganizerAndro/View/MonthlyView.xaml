@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewconverter="clr-namespace:TaskOrganizerAndro.Helpers"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="TaskOrganizerAndro.View.MonthlyView"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <viewconverter:DateTodayColorConverter x:Key="dateColorConverter"/>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <SwipeView Threshold="175" Grid.Row="0">
+            <SwipeView.LeftItems>
+                <SwipeItems Mode="Execute">
+                    <SwipeItem Invoked="SwipeItem_Invoked"/>
+                </SwipeItems>
+            </SwipeView.LeftItems>
+            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <DatePicker x:Name="MonthlyDatePicker" DateSelected="MonthlyDatePicker_DateSelected"/>
+                <Button x:Name="ResetMonth" Text="Reset Miesiaca" Clicked="ResetMonth_Clicked"/>
+            </StackLayout>
+        </SwipeView>
+        <CollectionView x:Name="MonthlyListView" SelectionMode="None" Grid.Row="1" ItemsSource="{Binding MonthlyGroupList}" IsGrouped="True">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,0,0,4" Padding="0" BorderColor="Transparent">
+                        <Grid>
+                            <Label
+                                Margin="0,4,0,0"
+                                Padding="5,0,0,0"
+                                FontAttributes="Bold" 
+                                Grid.Row="0"
+                                FontSize="24" Text="{Binding GroupTitle}" HorizontalTextAlignment="Start"
+                                BackgroundColor="{Binding DateMarking, Converter={StaticResource dateColorConverter}}"/>
+                            <Button
+                                Grid.Row="0"
+                                HeightRequest="35"
+                                Command="{Binding Path=BindingContext.SetReturnDate, Source={Reference MonthlyListView}}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="Transparent"
+                                Padding="5,0,0,0"
+                                Margin="0,4,0,0"
+                                Clicked="Button_ClickedReturnToDailyView"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Label
+                        TextColor="{AppThemeBinding Dark=Black, Light=Black}"
+                        BackgroundColor="{Binding StatusColor}" 
+                        Text="{Binding Event}"
+                        Padding="5,0,0,0"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
